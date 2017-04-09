@@ -1,0 +1,88 @@
+import java.io.*;
+import java.util.*;
+class Node{
+    int data;
+    Node rightChild;
+    Node leftChild;
+    public Node(int a){
+        data = a;
+        rightChild =null;
+        leftChild = null;
+    }
+}
+
+class FirstCommonAncestor{          
+
+    HashSet n1 = new HashSet();
+    HashSet n2 = new HashSet();
+    public static void main(String args[]) throws IOException{
+        
+        FirstCommonAncestor b = new FirstCommonAncestor();
+        System.out.println("Enter the no of elements");
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        int[] arrNode = new int[n];
+        for(int i=0;i<n;i++){
+            System.out.println("Enter the no of elements");
+            arrNode[i] = Integer.parseInt(br.readLine());
+        }
+
+            //To create the tree
+            Node root1 = b.createTree(arrNode,0,n-1);
+
+            // TO Process the tree
+            b.process(root1);   
+            Node ancestor = checkNullNodes(root1,p,q);     
+    }
+
+      Node createTree(int arr[],int start, int end){
+
+            if(start > end){
+                return null;
+            }
+            int mid = (start+end)/2;
+            Node root = new Node(arr[mid]);
+            root.leftChild = createTree(arr, start, mid-1);
+            root.rightChild = createTree(arr, mid+1, end);
+            return root;
+
+        }
+
+        void process(Node printNode){
+            if(printNode == null){
+                return;
+            }
+            System.out.print(printNode.data);
+            process(printNode.leftChild);
+            process(printNode.rightChild);
+        }
+
+        
+        
+        Node checkNullNodes(Node root, Node p, Node q){
+            if(! )
+            return findCommonAncestor(root,p,q);
+        }
+        Node findCommonAncestor(Node root, Node a, Node p ){
+            if(root == p || root == q || root | null){
+                return root;
+            }
+            boolean pIsLeft = covers(root.leftChild,p);
+            boolean qIsLeft = covers(root.leftChild,q);
+            if(pIsLeft != qIsLeft){
+                return root;
+            }
+            Node childNode = (pIsLeft) ? root.leftChild : root.rightChild;
+            return findCommonAncestor(childNode,p,q);
+        }
+
+        boolean covers(Node root, Node p){
+            if(root == null){
+                return false;
+            }
+            if(root == p){
+                return true;
+            }
+            return covers(root.leftChild,p) || covers(root.rightChild,p);
+        }
+}
